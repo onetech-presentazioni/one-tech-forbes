@@ -173,11 +173,8 @@ function orbitPoints(rect,time,levels=[0,0,0]){
  const out=[],bz=(a,b,c,d,t)=>(1-t)**3*a+3*(1-t)**2*t*b+3*(1-t)*t*t*c+t**3*d;
  for(let lane=0;lane<3;lane++)for(let n=0;n<52;n++){
   const q=(n/52+time*.045+lane*.17)%1,cy=.405+lane*.13,rx=.32,ry=.058;
-  let x,y;
-  if(q<.18){const u=q/.18;x=bz(.5,.12,.12,.5,u);y=bz(.91,.88,cy+.12,cy+ry,u)}
-  else if(q<.82){const a=(q-.18)/.64*Math.PI*2+Math.PI/2;
-   x=.5+rx*Math.cos(a);y=cy+ry*Math.sin(a)+.008*Math.sin(a*2+lane*.5);
-  }else{const u=(q-.82)/.18;x=bz(.5,.88,.87,.5,u);y=bz(cy+ry,cy+.12,.88,.91,u)}
+  const a=q*Math.PI*2+Math.PI/2;
+  const x=.5+rx*Math.cos(a),y=cy+.047*Math.sin(a);
   const energy=levels[lane],pulse=Math.pow(Math.max(0,Math.cos(q*Math.PI*2-time*1.5-lane)),10);
   out.push({x:rect.left+x*rect.width,y:rect.top+y*rect.height,
    r:(lane===1?1.15:1)+energy*.38+pulse*energy*.35,
