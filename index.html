@@ -38,7 +38,7 @@ for(const direction of [-1,1])for(const inner of [false,true])for(let j=0;j<34;j
  const q=(elapsed/12+j/34)%1,t=1-Math.pow(1-q,1.6),a=1-t;
  const x=w/2+direction*spread*(3*a*t*t+t*t*t),y=a*a*a*forkY+3*a*a*t*(forkY-h*.09)+3*a*t*t*(endY+h*.05)+t*t*t*endY;
  const weave=Math.sin(t*Math.PI*3+elapsed*.4)*Math.sin(Math.PI*t)*(inner?2:4)*(h/844);
- ctx.globalAlpha=(inner?.5:.72)*Math.min((1-t)/.22,1);ctx.fillStyle=inner?'#855cff':'#ffffff';ctx.beginPath();ctx.arc(x+weave,y,Math.max(.8,(inner?1.5:2.1)*(h/1080))*(1-t*.3),0,Math.PI*2);ctx.fill();
+ ctx.globalAlpha=(inner?.5:.72)*Math.min((1-t)/.22,1);ctx.fillStyle=direction<0?'#855cff':'#ffffff';ctx.beginPath();ctx.arc(x+weave,y,Math.max(.8,(inner?1.5:2.1)*(h/1080))*(1-t*.3),0,Math.PI*2);ctx.fill();
 }
 ctx.globalAlpha=1;
 guests.forEach((el,i)=>{const phase=(elapsed*23+i*spacing)%travel;const y=origin+150-phase,side=i%2===0?-1:1,cw=el.offsetWidth;const left=side<0?(mobile?12:w/2-Math.min(w*.34,470)):(mobile?w-cw-12:w/2+Math.min(w*.10,145));const opacity=Math.max(0,Math.min(1,(origin-y-el.offsetHeight-45)/55,(y-h*.36)/65));el.style.transform='translate3d('+left+'px,'+y+'px,0)';el.style.opacity=opacity;el.style.visibility=opacity?'visible':'hidden';const cy=y+38;let u=(origin-cy)/h;const amplitude=42*(h/1080);const x=w/2+amplitude*Math.min(Math.max(u,0)*7,1)*Math.sin(u*Math.PI*5);const end=side<0?left+cw+5:left-5;lines[i].setAttribute('d','M '+x+' '+cy+' C '+(x+side*15)+' '+cy+' '+(end-side*12)+' '+cy+' '+end+' '+cy);lines[i].style.opacity=opacity*.75});requestAnimationFrame(draw)}
