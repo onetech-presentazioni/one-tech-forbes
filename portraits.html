@@ -183,6 +183,8 @@ function runMobileFilaments({token,overlay,dc,pairs,extras,paint,film}){
   dc.clearRect(0,0,innerWidth,innerHeight);
   pairs.forEach((p,i)=>{
    const to=targets[i],arc=Math.sin(Math.PI*morph)*(to.lane-1)*12;
+   // Keep the central purple strand legible on high-density phone screens.
+   if(to.lane===1){to.r=Math.max(1.15,to.r*1.35);to.alpha*=.95/.65;p.b=[166,133,255]}
    paint({x:p.from.x+(to.x-p.from.x)*morph+arc,y:p.from.y+(to.y-p.from.y)*morph,
     r:p.from.r+(to.r-p.from.r)*morph,alpha:p.from.alpha+(to.alpha-p.from.alpha)*morph,
     color:'rgb('+p.a.map((v,k)=>Math.round(v+(p.b[k]-v)*morph)).join(',')+')'});
