@@ -59,10 +59,10 @@ ctx.globalAlpha=1;
 // Two restrained, upward-curving branches; vector brand artwork stays separate.
 const spread=w*(mobile?.25:.22);
 for(const direction of [-1,1])for(const inner of [false,true])for(let j=0;j<34;j++){
- const logoRect=logoRects[direction<0?0:1],endY=logoRect.bottom-logoRect.height*.35;const q=(elapsed/12+j/34)%1,t=1-Math.pow(1-q,1.6),a=1-t;
- const x=w/2+direction*spread*(3*a*t*t+t*t*t),y=a*a*a*forkY+3*a*a*t*(forkY-h*.09)+3*a*t*t*(endY+h*.05)+t*t*t*endY;
+ const logoRect=logoRects[direction<0?0:1],endY=logoRect.top+logoRect.height*(direction<0?.85:.94),targetX=logoRect.left+logoRect.width*(direction<0?.682:.405);const q=(elapsed/12+j/34)%1,t=1-Math.pow(1-q,1.6),a=1-t;
+ const x=w/2+(targetX-w/2)*(3*a*t*t+t*t*t),y=a*a*a*forkY+3*a*a*t*(forkY-h*.09)+3*a*t*t*(endY+h*.05)+t*t*t*endY;
  const weave=Math.sin(t*Math.PI*2+elapsed*.25)*Math.sin(Math.PI*t)*(inner?2:4)*(h/844);
- ctx.globalAlpha=(inner?.5:.72)*ease((1-t)/.08);ctx.fillStyle=direction<0?'#855cff':'#ffffff';ctx.beginPath();ctx.arc(x+weave,y,Math.max(.8,(inner?1.5:2.1)*(h/1080))*(1-t*.3),0,Math.PI*2);ctx.fill();
+ ctx.globalAlpha=(inner?.5:.72)*ease((1-t)/.025);ctx.fillStyle=direction<0?'#855cff':'#ffffff';ctx.beginPath();ctx.arc(x+weave,y,Math.max(.8,(inner?1.5:2.1)*(h/1080))*(1-t*.3),0,Math.PI*2);ctx.fill();
 }
 ctx.globalAlpha=1;
 guests.forEach((el,i)=>{const phase=(elapsed*18+i*spacing)%travel;const y=origin+150-phase,side=i%2===0?-1:1,cw=el.offsetWidth;const left=side<0?(mobile?12:w/2-Math.min(w*.34,470)):(mobile?w-cw-12:w/2+Math.min(w*.10,145));const opacity=ease((origin-y-el.offsetHeight-(compact?30:45))/(compact?35:60))*ease((y-h*(compact?.30:.36))/(compact?40:75));el.style.transform='translate3d('+left+'px,'+y+'px,0)';el.style.opacity=opacity;el.style.visibility=opacity?'visible':'hidden';const cy=y+38;let u=(origin-cy)/h;const amplitude=42*(h/1080);const x=w/2+amplitude*Math.min(Math.max(u,0)*7,1)*ease((cy-forkY)/95)*Math.sin(u*Math.PI*5);const end=side<0?left+cw+5:left-5;lines[i].setAttribute('d','M '+x+' '+cy+' C '+(x+side*15)+' '+cy+' '+(end-side*12)+' '+cy+' '+end+' '+cy);lines[i].style.opacity=opacity*.75});requestAnimationFrame(draw)}
