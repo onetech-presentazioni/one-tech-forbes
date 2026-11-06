@@ -60,7 +60,7 @@
 const canvas=document.querySelector('#flow'),ctx=canvas.getContext('2d'),main=document.querySelector('main'),guests=[...document.querySelectorAll('.guest')],svg=document.querySelector('#connections'),dialog=document.querySelector('dialog');
 const lines=guests.map(()=>{let p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('fill','none');p.setAttribute('stroke','#ffffff55');p.setAttribute('stroke-width','.8');svg.append(p);return p});
 let w=innerWidth,h=main.clientHeight,elapsed=24,last=0,paused=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const register=document.querySelector('#register');let excitement=0,hovered=false,burstAt=-100;
+const brandLogos=[...document.querySelectorAll('.brand img')];const register=document.querySelector('#register');let excitement=0,hovered=false,burstAt=-100;
 function engage(){if(!hovered){hovered=true;burstAt=performance.now()/1000}}
 function disengage(){hovered=false}
 register.addEventListener('pointerenter',e=>{if(e.pointerType!=='touch')engage()});register.addEventListener('pointerleave',disengage);register.addEventListener('focus',engage);register.addEventListener('blur',disengage);
@@ -71,7 +71,7 @@ function particle(x,y,r,id,color){
 }
 function resize(){w=main.clientWidth;h=main.clientHeight;svg.setAttribute('viewBox','0 0 '+w+' '+h);const d=Math.min(devicePixelRatio||1,3);canvas.width=Math.round(w*d);canvas.height=Math.round(h*d);ctx.setTransform(d,0,0,d,0,0)}new ResizeObserver(resize).observe(main);
 const ease=v=>{v=Math.max(0,Math.min(1,v));return v*v*(3-2*v)};
-function draw(ms){const dt=last?Math.min((ms-last)/1000,.05):0;excitement+=((hovered&&!paused?1:0)-excitement)*(1-Math.exp(-dt*5));if(last&&!paused&&!document.hidden)elapsed+=(ms-last)/1000;last=ms;const mobile=w<=600,spacing=mobile?225:Math.max(150,h*.22),travel=spacing*6,origin=h*.84;
+function draw(ms){const dt=last?Math.min((ms-last)/1000,.05):0;excitement+=((hovered&&!paused?1:0)-excitement)*(1-Math.exp(-dt*5));brandLogos.forEach(logo=>logo.style.opacity=1-excitement*.92);if(last&&!paused&&!document.hidden)elapsed+=(ms-last)/1000;last=ms;const mobile=w<=600,spacing=mobile?225:Math.max(150,h*.22),travel=spacing*6,origin=h*.84;
 const compact=h<660,forkY=h*(compact?.27:.32);const logoRects=[...document.querySelectorAll('.brand img')].map(e=>e.getBoundingClientRect());ctx.clearRect(0,0,w,h);
 for(const inner of [false,true])for(let side=0;side<2;side++)for(let i=0;i<(inner?64:80);i++){
 const u=(elapsed/8+i/(inner?64:80))%1,a=u*Math.PI*5+side*Math.PI,y=origin-u*h;
