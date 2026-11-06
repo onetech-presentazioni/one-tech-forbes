@@ -102,7 +102,7 @@ body.form-opening #flow{visibility:hidden}
 #registration input{width:100%;text-align:center}
 #registration .form-submit{left:25%;width:50%;text-align:center;border-bottom-color:rgba(166,133,255,calc(.35 + var(--form-energy,0)*.65));text-shadow:0 0 calc(var(--form-energy,0)*18px) #a685ff80}
 #registration .form-submit span{position:absolute;right:0;float:none}
-#registration .field{padding-top:0}#registration input{height:40px;min-height:40px;max-height:40px}#registration .field-one{top:calc(40.5% - 20px)}#registration .field-two{top:calc(53.5% - 20px)}#registration .field-three{top:calc(66.5% - 20px)}
+#registration .field{padding-top:0}#registration input{height:40px;min-height:40px;max-height:40px}#registration .field-one{top:calc(37.5% - 20px)}#registration .field-two{top:calc(53.5% - 20px)}#registration .field-three{top:calc(69.5% - 20px)}
 .form-scene{width:min(100vw,85svh);max-width:100%;min-width:0}
 #registration .field{left:16%;width:68%}
 #registration input{font-size:clamp(17px,3.4cqw,21px)}
@@ -177,7 +177,7 @@ function aePoints(rect,time=2){
 function orbitPoints(rect,time,levels=[0,0,0]){
  const out=[],bz=(a,b,c,d,t)=>(1-t)**3*a+3*(1-t)**2*t*b+3*(1-t)*t*t*c+t**3*d;
  for(let lane=0;lane<3;lane++)for(let n=0;n<52;n++){
-  const q=(n/52+time*.045+lane*.17)%1,cy=.405+lane*.13,rx=.36,ry=.054;
+  const q=(n/52+time*.045+lane*.17)%1,cy=.375+lane*.16,rx=.36,ry=.054;
   const a=q*Math.PI*2+Math.PI/2;
   const x=.5+rx*Math.cos(a),y=cy+.054*Math.sin(a);
   const energy=levels[lane],pulse=Math.pow(Math.max(0,Math.cos(q*Math.PI*2-time*1.5-lane)),10);
@@ -233,7 +233,7 @@ function runMobileFilaments({token,overlay,dc,pairs,extras,paint,film}){
    for(let k=0;k<36;k++){
     const a=k*2.39996+lane,travel=(1-Math.exp(-age*5))*Math.min(14+k%7*4,rect.width*.075);
     const x=rect.left+rect.width*(.5+.36*Math.cos(a))+Math.cos(a)*travel;
-    const y=rect.top+rect.height*(.405+lane*.13+.054*Math.sin(a))+Math.sin(a)*Math.min(travel,rect.height*.009);
+    const y=rect.top+rect.height*(.375+lane*.16+.054*Math.sin(a))+Math.sin(a)*Math.min(travel,rect.height*.009);
     dc.shadowBlur=14;dc.shadowColor=lane===1?'#ba9cff':'#ffffff';
     paint({x,y,r:1+(k%3)*.35,alpha:Math.pow(1-age/1.1,1.5)*power,color:k%3===0?'#b89aff':'#f4efff'});
    }
