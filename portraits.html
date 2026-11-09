@@ -203,7 +203,7 @@ const ease=v=>{v=Math.max(0,Math.min(1,v));return v*v*(3-2*v)};
 function draw(ms){if(opening){last=ms;requestAnimationFrame(draw);return}framePoints=[];const dt=last?Math.min((ms-last)/1000,.05):0;excitement+=(((hovered||opening)&&!paused?1:0)-excitement)*(1-Math.exp(-dt*5));formMorph+=((opening?1:0)-formMorph)*(1-Math.exp(-dt*3));const breath=paused?0:(1-Math.cos(Math.max(0,ms/1000-burstAt)*Math.PI*2/2.8))*.5;
  const dimOpacity=1-excitement*(.92-.10*breath);
  brandLogos.forEach(logo=>logo.style.opacity=dimOpacity);document.querySelector(".kore-mark").style.opacity=dimOpacity;if(last&&!paused&&!document.hidden)elapsed+=(ms-last)/1000;last=ms;const mobile=w<=600,spacing=mobile?225:Math.max(150,h*.22),travel=spacing*6,origin=flowOrigin();
-const compact=h<660,forkY=h*(compact?.27:.32),kSize=mobile?110:150,kBottom=forkY+kSize*.36;document.querySelector(".kore-mark").style.top=forkY+"px";const logoRects=[...document.querySelectorAll('.brand img')].map(e=>e.getBoundingClientRect());ctx.clearRect(0,0,w,h);
+const compact=h<660,forkY=h*(compact?.27:.32),kSize=mobile?110:150,kBottom=forkY+kSize*.30;document.querySelector(".kore-mark").style.top=forkY+"px";const logoRects=[...document.querySelectorAll('.brand img')].map(e=>e.getBoundingClientRect());ctx.clearRect(0,0,w,h);
 for(const inner of [false,true])for(let side=0;side<2;side++)for(let i=0;i<(inner?64:80);i++){
 const u=(elapsed/6+i/(inner?64:80))%1,a=u*Math.PI*5+side*Math.PI,y=origin-u*h;
 if(y<kBottom)continue;ctx.globalAlpha=Math.min(u/.025,1)*(inner?.85+.15*Math.cos(a):.55+.4*Math.cos(a));
